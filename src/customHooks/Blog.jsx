@@ -1,16 +1,7 @@
-import { useEffect, useRef } from "react";
+import useLinkNewTab from "../hooks/useLinkNewTab";
 
 const Blog = () => {
-  const blankRef = useRef(null);
-
-  useEffect(() => {
-    // console.log("blankRef :>> ", blankRef.current.querySelectorAll("a"));
-    const tagA = blankRef.current.querySelectorAll("a");
-    tagA.forEach((item) => {
-      // console.log("item :>> ", item);
-      item.setAttribute("target", "_blank");
-    });
-  }, []);
+  const blankRef = useLinkNewTab();
 
   return (
     <div ref={blankRef}>
