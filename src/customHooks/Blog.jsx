@@ -1,9 +1,10 @@
+
 import useHoverLink from "../hooks/useHoverLink";
 import useLinkNewTab from "../hooks/useLinkNewTab";
 
 const Blog = () => {
   const blankRef = useLinkNewTab();
-  const [hover, nodeRef] = useHoverLink();
+  const [hover, nodeRef] = useHoverLin
   console.log("🚀 ~ file: Blog.jsx:7 ~ Blog ~ hover:", hover);
 
   return (
