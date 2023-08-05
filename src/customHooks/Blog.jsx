@@ -1,7 +1,11 @@
+
+import useHoverLink from "../hooks/useHoverLink";
 import useLinkNewTab from "../hooks/useLinkNewTab";
 
 const Blog = () => {
   const blankRef = useLinkNewTab();
+  const [hover, nodeRef] = useHoverLin
+  console.log("🚀 ~ file: Blog.jsx:7 ~ Blog ~ hover:", hover);
 
   return (
     <div ref={blankRef}>
@@ -14,7 +18,8 @@ const Blog = () => {
           dolorum ipsum! Corporis, voluptate architecto!
         </p>
         <a
-          className="underline"
+          className={hover ? "text-red-500" : ""}
+          ref={nodeRef}
           href="https://www.geeksforgeeks.org/collect-js-contains-method/"
         >
           Link
