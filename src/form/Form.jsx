@@ -1,21 +1,13 @@
 import { useState } from "react";
+import useHandleChange from "../hooks/useHandleChange";
 
 const Form = () => {
-  const [data, setData] = useState({
+  const { data, handleOnChange } = useHandleChange({
     fullName: "",
     password: "",
     hobby: "",
   });
-
-  console.log("🚀 ~ file: Form.jsx:8 ~ Form ~ data:", data);
-
-  const handleOnChange = (e) => {
-    const { type, value, checked, name } = e.target;
-    setData((item) => ({
-      ...item,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  };
+  console.log("🚀 ~ file: Form.jsx:11 ~ Form ~ data:", data);
 
   return (
     <div>
