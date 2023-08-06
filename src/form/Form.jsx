@@ -4,14 +4,16 @@ const Form = () => {
   const [data, setData] = useState({
     fullName: "",
     password: "",
+    hobby: "",
   });
 
   console.log("🚀 ~ file: Form.jsx:8 ~ Form ~ data:", data);
 
   const handleOnChange = (e) => {
+    const { type, value, checked, name } = e.target;
     setData((item) => ({
       ...item,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -32,6 +34,13 @@ const Form = () => {
           type="text"
           placeholder="Password"
           className="p-3 mt-2 border-2 border-slate-400 shadow-md rounded-md outline-none"
+        />{" "}
+        <br />
+        <input
+          onChange={handleOnChange}
+          type="checkbox"
+          name="hobby"
+          id=""
         />{" "}
         <br />
         <button
