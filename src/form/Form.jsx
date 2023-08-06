@@ -7,11 +7,19 @@ const Form = () => {
     password: "",
     hobby: "",
   });
-  console.log("🚀 ~ file: Form.jsx:11 ~ Form ~ data:", data);
+
+  const [err, setErr] = useState("");
+
+  const handleOnSubmit = (e) => {
+    e.preventDefault();
+    if (data.fullName == "") {
+      setErr("Name không đươc để trống.");
+    }
+  };
 
   return (
     <div>
-      <form action="" method="get" autoComplete="false">
+      <form action="" method="get" autoComplete="off" onSubmit={handleOnSubmit}>
         <input
           onChange={handleOnChange}
           name="fullName"
@@ -19,6 +27,8 @@ const Form = () => {
           placeholder="Please enter your full name."
           className="p-3 border-2 border-slate-400 shadow-md rounded-md outline-none"
         />{" "}
+        <br />
+        <span className="fullNameErr text-red-800">{err}</span>
         <br />
         <input
           onChange={handleOnChange}
