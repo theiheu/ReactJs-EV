@@ -1,37 +1,19 @@
-const MovieItem = ({ data }) => {
-  // adult: false;
-  // backdrop_path: "/qsV6APrwXsnuxV4OtfFoN9HGjQN.jpg";
-  // genre_ids: [99];
-  // id: 1123470;
-  // original_language: "fr";
-  // original_title: "À La Recherche De L'Émir Abd El-Kader";
-  // overview: "Abdelkader ibn Muhieddine (Arabic: عبد القادر بن محي الدين (ʿAbd al-Qādir ibn Muḥyiddīn), also known as Emir Abdelkader, or Abdelkader El Djezairi (Abdelkader the Algerian), born September 6, 1808 in El Guettana, in the regency of Algiers, and died on May 26, 1883 in Damascus, then in the Ottoman Empire and in present-day Syria, is an Algerian emir, religious and military leader. Barely 20 years old, he federates the tribes and led a struggle against the conquest of Algeria by France in the middle of the 19th century.After his surrender, he was held captive in France before going into exile in Syria where he devoted himself to poetry and established great relations friendship with Paris, which showered him with honors after having intervened in favor of the persecuted Christians in Syria, he intervened by force to protect the Christian families who came to take refuge in large numbers in the Algerian district. of certain death.";
-  // popularity: 0.621;
-  // poster_path: "/lOzjdOMzoMmhIQt4AC49oK3L78t.jpg";
-  // release_date: "2004-01-01";
-  // title: "On The Trail Of Emir Abd El-Kader";
-  // video: false;
-  // vote_average: 10;
-  // vote_count: 1;
+import "./../../index.css";
 
-  // https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg
-
+function LoadingSkeleton() {
   return (
     <div className="max-w-[300px] h-[400px] bg-white shadow-[rgba(0,_0,_0,_0.15)_0px_2px_8px] rounded-md p-2">
       {
         <img
-          className="rounded-md h-[200px] w-full object-cover"
+          className="rounded-md h-[200px] w-full skeleton"
           // https://image.tmdb.org/t/p/w500/1E5baAaEse26fej7uHcjOgEE2t2.jpg
-          src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`}
           alt=""
         />
       }
       <div className="flex flex-col flex-1">
-        <h2 className="text-ellipsis font-bold mt-2 line-clamp-2 h-[48px]">
-          {data.title}
-        </h2>
+        <h2 className="skeleton text-ellipsis font-bold mt-2 line-clamp-2 h-[48px]"></h2>
         <div className="body">
-          <p className="mt-3 line-clamp-3">{data.overview}</p>
+          <p className="mt-3 line-clamp-3"></p>
 
           <span>
             <div className="flex items-center gap-x-3 mt-3">
@@ -50,15 +32,13 @@ const MovieItem = ({ data }) => {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="text-sm font-semibold text-[#333]">
-                {data.vote_average}
-              </span>
+              <span className="text-sm font-semibold text-[#333]"></span>
             </div>
           </span>
         </div>
       </div>
     </div>
   );
-};
+}
 
-export default MovieItem;
+export default LoadingSkeleton;

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import MovieItem from "../MovieItem";
 import useDebounce from "../../hooks/useDebounce";
+import LoadingSkeleton from "../loading/LoadingSkeleton";
 
 function MovieSearchApp() {
   const apiKey = "1760ac0af799ab5fc2105b216bc09ce0";
@@ -13,6 +14,7 @@ function MovieSearchApp() {
   const [query, setQuery] = useState("spider man");
   const queryDebounce = useDebounce(query, 500);
   const [loading, setLoading] = useState(true);
+  const [arrMovies, setArrMovies] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -23,6 +25,10 @@ function MovieSearchApp() {
 
       if (respone.data.results.length > 0) {
         setMovies(respone.data.results);
+        console.log(
+          "🚀 ~ file: MovieSearchApp.jsx:27 ~ fetchData ~ respone.data.results:",
+          respone.data.results
+        );
       }
     }
 
@@ -32,7 +38,8 @@ function MovieSearchApp() {
   }, [query, queryDebounce]);
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
+    console.log(arrMovies);
+    e.preventDefault();
     // if (valSearch.value) {
     //   const newUrl = `https://api.themoviedb.org/3/search/movie?query=${valSearch.value}&api_key=1760ac0af799ab5fc2105b216bc09ce0`;
     //   setUrl(newUrl);
@@ -59,15 +66,27 @@ function MovieSearchApp() {
       >
         Search
       </button>
-      <div className="Movie-list mt-[100px] grid grid-cols-4 gap-12">
-        {loading && <p>Loading...</p>}
-        {!loading && movies.length > 0
-          ? movies.map((item) => {
+      {!loading ? (
+        <div className="Movie-list mt-[100px] grid grid-cols-4 gap-12">
+          {movies.length > 0 &&
+            movies.map((item) => {
               return <MovieItem key={item.id} data={item} />;
-            })
-          : "404"}
-      </div>
+            })}
+        </div>
+      ) : (
+        <div className="Movie-list mt-[100px] grid grid-cols-4 gap-12">
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+          <LoadingSkeleton />
+        </div>
+      )}
     </form>
   );
 }
+
 export default MovieSearchApp;
