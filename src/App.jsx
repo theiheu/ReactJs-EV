@@ -1,12 +1,13 @@
 import "./App.css";
-import MovieSearchApp from "./component/movieSearchApp/MovieSearchApp";
-// import Form from "./form/Form";
+// import MovieSearchApp from "./component/movieSearchApp/MovieSearchApp";
+import Form from "./form/Form";
+import FormV2 from "./form/FormV2";
 
 function App() {
   return (
     <>
-      {/* <Form /> */}
-      <MovieSearchApp />
+      <FormV2 />
+      {/* <MovieSearchApp /> */}
     </>
   );
 }
