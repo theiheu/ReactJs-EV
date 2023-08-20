@@ -1,96 +1,139 @@
-import { ErrorMessage, Field, Formik } from "formik";
-import { Form } from "formik";
+import { ErrorMessage, Field, Form, Formik, useField, useFormik } from "formik";
+import * as Yup from "yup";
 
 function SignUpForm() {
+  const MyInput = ({ label, ...props }) => {
+    const [field, meta] = useField(props);
+    return (
+      <div className="flex flex-col items-left max-w-[300px] mx-auto mt-2">
+        <label className="text-left" htmlFor={field.name}>
+          {label}
+          <Field
+            id={field.name}
+            className="p-3 mt-2 border-2 border-red-300 rounded-md"
+            {...field}
+            {...props}
+          />
+        </label>
+        <div className="text-red-500 text-left">
+          <ErrorMessage name={field.name} />
+        </div>
+      </div>
+    );
+  };
+
   return (
     <Formik
+      className=""
       initialValues={{
-        toggle: false,
-        checked: [],
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
       }}
-      onSubmit={async () => {}}
+      validationSchema={Yup.object({
+        firstName: Yup.string()
+          .max(15, "Must be 15 characters or less")
+          .required("Required"),
+        lastName: Yup.string()
+          .max(20, "Must be 20 characters or less")
+          .required("Required"),
+        email: Yup.string().email("Invalid email address").required("Required"),
+        password: Yup.string()
+          .min(8, "Must be 8 characters or more")
+          .max(20, "Must be 20 characters or less")
+          .required("Required"),
+        confirmPassword: Yup.string()
+          .oneOf([Yup.ref("password"), null], "Passwords must match")
+          .max(20, "Must be 20 characters or less")
+          .required("Required"),
+      })}
+      onSubmit={(values, actions) => {
+        setTimeout(() => {
+          alert(JSON.stringify(values, null, 2));
+          actions.resetForm();
+          actions.setSubmitting(false);
+        }, 4000);
+      }}
     >
-      <Form className="w-[300px] mx-auto">
-        {/* First Name */}
-        <div className="text-left">
-          <label className="font-bold">First name</label>
-          <Field
-            type={"text"}
-            className={
-              "w-full p-3 mt-1 mb-6 border-2 border-slate-200 rounded-md outline-none"
-            }
-            placeholder={"Enter your first name"}
-          ></Field>
-          <ErrorMessage name="firstName"></ErrorMessage>
-        </div>
-        {/* Last Name */}
-        <div className="text-left">
-          <label className="font-bold">Last name</label>
-          <Field
-            type={"text"}
-            className={
-              "w-full p-3 mt-1 mb-6 border-2 border-slate-200 rounded-md outline-none"
-            }
-            placeholder={"Enter your last name"}
-          ></Field>
-          <ErrorMessage name="firstName"></ErrorMessage>
-        </div>
-        {/* Email */}
-        <div className="text-left">
-          <label className="font-bold">Email address</label>
-          <Field
-            type={"email"}
-            className={
-              "w-full p-3 mt-1 mb-6 border-2 border-slate-200 rounded-md outline-none resize-none"
-            }
-            placeholder={"Enter your email name"}
-          ></Field>
-          <ErrorMessage name="firstName"></ErrorMessage>
-        </div>
-        {/* Text Area */}
-        <div className="text-left">
-          <label className="font-bold">Introduce yourself</label>
-          <Field
-            className={
-              "w-full h-[120px] p-3 mt-1 mb-6 border-2 border-slate-200 rounded-md outline-none resize-none"
-            }
-            placeholder={"Enter your introduce"}
-            as={"textarea"}
-          ></Field>
-          <ErrorMessage name="firstName"></ErrorMessage>
-        </div>
-        {/* Selection */}
-        <div className="text-left">
-          <select
-            className={
-              "w-full p-3 mt-1 mb-6 border-2 border-slate-200 rounded-md"
-            }
-          >
-            <option value="Frontend Developer">Frontend Developer</option>
-            <option value="Backend Developer">Backend Developer</option>
-            <option value="Node JS">Node JS</option>
-          </select>
-          <ErrorMessage name="firstName"></ErrorMessage>
-        </div>
-        {/* Checkbox */}
-        <div className="text-left flex items-center">
-          <Field
-            type="checkbox"
-            className="form-checkbox text-indigo-500 h-5 w-5"
-          ></Field>
-          <p className="inline-block ms-2">
-            I accepts the terms and conditions
-          </p>
-          <ErrorMessage name="tems"></ErrorMessage>
-        </div>
+      {(Formik) => (
+        <Form autoComplete="false">
+          {/* first name */}
+          <MyInput
+            label="First Name"
+            name="firstName"
+            type="text"
+            placeholder="Please enter your first name..."
+          />
 
-        <button
-          type="submit"
-          className="w-full p-3 mt-1 bg-blue-400 rounded-md"
-        >
-          Submit
-        </button>
-      </Form>
+          {/* last name */}
+          <MyInput
+            label="Last Name"
+            name="lastName"
+            type="text"
+            placeholder="Please enter your first name..."
+          />
+
+          {/* email */}
+          <MyInput
+            label="Email"
+            name="email"
+            type="email"
+            placeholder="Please enter your first name..."
+          />
+
+          {/* password */}
+          <MyInput
+            label="Password Name"
+            name="password"
+            type="password"
+            placeholder="Please enter your first name..."
+          />
+
+          {/* confirm password */}
+          <MyInput
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            placeholder="Please enter your first name..."
+          />
+
+          {!Formik.isSubmitting ? (
+            <button
+              type="submit"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center mt-3"
+            >
+              Submit
+            </button>
+          ) : (
+            <button
+              disabled
+              type="submit"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 inline-flex items-center mt-3"
+            >
+              <svg
+                aria-hidden="true"
+                role="status"
+                class="inline w-4 h-4 mr-3 text-white animate-spin"
+                viewBox="0 0 100 101"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                  fill="#E5E7EB"
+                />
+                <path
+                  d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                  fill="currentColor"
+                />
+              </svg>
+              Loading...
+            </button>
+          )}
+        </Form>
+      )}
     </Formik>
   );
 }
